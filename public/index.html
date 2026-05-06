@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Kasir Modern</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-900 text-white">
+
+<div class="flex h-screen">
+
+  <!-- LEFT: INPUT -->
+  <div class="w-1/3 bg-slate-800 p-6 flex flex-col gap-4">
+
+    <h1 class="text-2xl font-bold mb-4">🛒 Kasir</h1>
+
+    <input id="nama" placeholder="Nama barang"
+      class="p-3 rounded text-black w-full">
+
+    <input id="harga" type="number" placeholder="Harga"
+      class="p-3 rounded text-black w-full">
+
+    <input id="jumlah" type="number" placeholder="Qty"
+      class="p-3 rounded text-black w-full">
+
+    <button onclick="tambah()"
+      class="bg-blue-500 hover:bg-blue-600 p-3 rounded w-full">
+      + Tambah Barang
+    </button>
+
+    <button onclick="reset()"
+      class="bg-red-500 hover:bg-red-600 p-3 rounded w-full">
+      Reset
+    </button>
+
+  </div>
+
+
+  <!-- RIGHT: TRANSAKSI -->
+  <div class="w-2/3 p-6 flex flex-col">
+
+    <h2 class="text-xl mb-4 font-semibold">🧾 Daftar Belanja</h2>
+
+    <!-- LIST -->
+    <div class="flex-1 bg-slate-800 p-4 rounded-xl overflow-y-auto">
+      <ul id="list" class="space-y-2"></ul>
+    </div>
+
+    <!-- TOTAL -->
+    <div class="mt-4 bg-slate-800 p-4 rounded-xl">
+      <h2 class="text-lg">Total: 
+        <span class="text-green-400 font-bold">Rp <span id="total">0</span></span>
+      </h2>
+    </div>
+
+    <!-- BAYAR -->
+    <div class="mt-4 bg-slate-800 p-4 rounded-xl">
+
+      <input id="bayar" type="number" placeholder="Uang bayar"
+        class="p-3 rounded text-black w-full mb-3">
+
+      <button onclick="bayar()"
+        class="bg-green-500 hover:bg-green-600 p-3 rounded w-full">
+        💰 Bayar
+      </button>
+
+      <h3 class="mt-3 text-lg">
+        Kembalian: 
+        <span class="text-yellow-400 font-bold">Rp <span id="kembalian">0</span></span>
+      </h3>
+
+    </div>
+
+    <!-- NAV -->
+    <a href="/riwayat.html"
+      class="mt-4 text-center bg-purple-500 hover:bg-purple-600 p-3 rounded">
+      📊 Riwayat Transaksi
+    </a>
+
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
