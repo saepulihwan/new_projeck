@@ -1,4 +1,21 @@
+const supabaseUrl =
+  "https://ijjdzlynmxzikwbiiqxx.supabase.co";
+
+const supabaseKey =
+  "sb_publishable_PKfhsyCFWeSXLe4RL0wUvA_aRTS0WDg";
+
+const supabaseClient =
+  supabase.createClient(
+    supabaseUrl,
+    supabaseKey
+  );
+
+
+// =======================
+// DATA
+// =======================
 let data = [];
+
 let total = 0;
 
 
@@ -7,7 +24,8 @@ let total = 0;
 // =======================
 function tambah() {
 
-  let nama = document.getElementById("nama").value;
+  let nama =
+    document.getElementById("nama").value;
 
   let harga = parseInt(
     document.getElementById("harga").value
@@ -17,11 +35,16 @@ function tambah() {
     document.getElementById("jumlah").value
   );
 
+  // VALIDASI
   if (!nama || !harga || !jumlah) {
+
     alert("Lengkapi data!");
+
     return;
+
   }
 
+  // PUSH DATA
   data.push({
     nama,
     harga,
@@ -30,8 +53,11 @@ function tambah() {
 
   render();
 
+  // RESET INPUT
   document.getElementById("nama").value = "";
+
   document.getElementById("harga").value = "";
+
   document.getElementById("jumlah").value = "";
 
 }
@@ -42,7 +68,8 @@ function tambah() {
 // =======================
 function render() {
 
-  let list = document.getElementById("list");
+  let list =
+    document.getElementById("list");
 
   list.innerHTML = "";
 
@@ -50,25 +77,34 @@ function render() {
 
   data.forEach((item, index) => {
 
-    let subtotal = item.harga * item.jumlah;
+    let subtotal =
+      item.harga * item.jumlah;
 
     total += subtotal;
 
-    let li = document.createElement("li");
+    let li =
+      document.createElement("li");
 
     li.className =
-      "flex justify-between bg-slate-700 p-3 rounded";
+      "flex flex-col md:flex-row md:justify-between bg-slate-700 p-4 rounded gap-2";
 
     li.innerHTML = `
+
       <div>
-        <p class="font-semibold">${item.nama}</p>
+
+        <p class="font-semibold text-lg">
+          ${item.nama}
+        </p>
+
         <p class="text-sm text-gray-300">
           ${item.jumlah} x Rp ${item.harga}
         </p>
+
       </div>
 
       <div class="text-right">
-        <p class="text-green-400 font-bold">
+
+        <p class="text-green-400 font-bold text-lg">
           Rp ${subtotal}
         </p>
 
@@ -76,17 +112,20 @@ function render() {
           onclick="hapus(${index})"
           class="text-red-400 text-sm">
 
-          hapus
+          Hapus
 
         </button>
+
       </div>
+
     `;
 
     list.appendChild(li);
 
   });
 
-  document.getElementById("total").innerText = total;
+  document.getElementById("total")
+    .innerText = total;
 
 }
 
@@ -112,7 +151,8 @@ function resetKasir() {
 
   render();
 
-  document.getElementById("kembalian").innerText = 0;
+  document.getElementById("kembalian")
+    .innerText = 0;
 
 }
 
@@ -120,29 +160,35 @@ function resetKasir() {
 // =======================
 // BAYAR
 // =======================
-function bayarTransaksi() {
+async function bayarTransaksi() {
 
-  // CEK APAKAH ADA BARANG
+  // VALIDASI
   if (data.length === 0) {
+
     alert("Belum ada barang!");
+
     return;
+
   }
 
-  // AMBIL INPUT BAYAR
   let bayar = parseInt(
     document.getElementById("bayar").value
   );
 
-  // CEK INPUT KOSONG
   if (isNaN(bayar)) {
+
     alert("Masukkan nominal bayar!");
+
     return;
+
   }
 
-  // CEK UANG KURANG
   if (bayar < total) {
+
     alert("Uang kurang!");
+
     return;
+
   }
 
   // HITUNG KEMBALIAN
@@ -151,55 +197,61 @@ function bayarTransaksi() {
   document.getElementById("kembalian")
     .innerText = kembalian;
 
+  try {
 
-  // SIMPAN KE DATABASE
-  fetch("/api/transaksi", {
+    // =======================
+    // SIMPAN KE SUPABASE
+    // =======================
+    for (let item of data) {
 
-    method: "POST",
+      const { error } =
+        await supabaseClient
+          .from("transaksi")
+          .insert([
+            {
+              nama_barang: item.nama,
+              harga: item.harga,
+              jumlah: item.jumlah,
+              total: item.harga * item.jumlah
+            }
+          ]);
 
-    headers: {
-      "Content-Type": "application/json"
-    },
+      if (error) {
 
-    body: JSON.stringify({
-      data,
-      total,
-      bayar,
-      kembalian
-    })
+        console.log(error);
 
-  })
+        alert("Gagal simpan ke database!");
 
-  .then(res => res.json())
+        return;
 
-  .then(res => {
+      }
 
-    alert(res.message);
+    }
 
     // =======================
     // TAMPILKAN STRUK
     // =======================
     document.getElementById("struk")
       .classList.remove("hidden");
-      // HILANGKAN STRUK OTOMATIS
-      setTimeout(() => {
-
-      document.getElementById("struk")
-      .classList.add("hidden");
-
-      }, 10000);
 
     let isi = "";
 
     data.forEach(item => {
 
       isi += `
+
         <div class="flex justify-between text-sm mb-1">
-          <span>${item.nama} (${item.jumlah})</span>
+
+          <span>
+            ${item.nama} (${item.jumlah})
+          </span>
+
           <span>
             Rp ${item.harga * item.jumlah}
           </span>
+
         </div>
+
       `;
 
     });
@@ -216,24 +268,29 @@ function bayarTransaksi() {
     document.getElementById("struk-kembalian")
       .innerText = kembalian;
 
+    // AUTO HIDE STRUK
+    setTimeout(() => {
 
-    // =======================
-    // RESET SETELAH BAYAR
-    // =======================
+      document.getElementById("struk")
+        .classList.add("hidden");
+
+    }, 5000);
+
+    // RESET
     data = [];
 
     render();
 
     document.getElementById("bayar").value = "";
 
-  })
+    alert("Transaksi berhasil!");
 
-  .catch(err => {
+  } catch (err) {
 
     console.log(err);
 
     alert("Terjadi kesalahan!");
 
-  });
+  }
 
 }

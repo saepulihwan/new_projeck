@@ -30,60 +30,66 @@
 
 </head>
 
-<body class="bg-slate-900 text-white p-6">
+<body class="bg-slate-900 text-white p-3 md:p-6">
 
-<h1 class="text-3xl font-bold mb-6">
+<h1 class="text-3xl font-bold mb-6 text-center">
   🛒 Kasir Modern
 </h1>
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
   <!-- INPUT -->
-  <div class="bg-slate-800 p-6 rounded-xl">
+  <div class="bg-slate-800 p-6 rounded-2xl shadow-lg">
 
-    <h2 class="text-xl mb-4 font-semibold">
+    <h2 class="text-2xl mb-5 font-semibold">
       Input Barang
     </h2>
 
     <div class="space-y-4">
 
+      <!-- NAMA -->
       <input
         id="nama"
         placeholder="Nama barang"
-        class="w-full p-3 rounded text-black">
+        class="w-full p-4 rounded-lg text-black text-lg">
 
+      <!-- HARGA -->
       <input
         id="harga"
         type="number"
         placeholder="Harga"
-        class="w-full p-3 rounded text-black">
+        class="w-full p-4 rounded-lg text-black text-lg">
 
+      <!-- JUMLAH -->
       <input
         id="jumlah"
         type="number"
         placeholder="Jumlah"
-        class="w-full p-3 rounded text-black">
+        class="w-full p-4 rounded-lg text-black text-lg">
 
+      <!-- TAMBAH -->
       <button
         onclick="tambah()"
-        class="bg-blue-500 hover:bg-blue-600 p-3 rounded w-full">
+        class="bg-blue-500 hover:bg-blue-600 p-4 rounded-lg w-full text-lg font-bold">
 
         + Tambah Barang
 
       </button>
 
+      <!-- RESET -->
       <button
         onclick="resetKasir()"
-        class="bg-red-500 hover:bg-red-600 p-3 rounded w-full">
+        class="bg-red-500 hover:bg-red-600 p-4 rounded-lg w-full text-lg font-bold">
 
         Reset
 
       </button>
 
+      <!-- RIWAYAT -->
       <a href="/riwayat.html"
-        class="block bg-purple-500 hover:bg-purple-600 p-3 rounded text-center">
+        class="block bg-purple-500 hover:bg-purple-600 p-4 rounded-lg text-center text-lg font-bold">
 
-        📊 Riwayat
+        📊 Riwayat Transaksi
 
       </a>
 
@@ -93,9 +99,9 @@
 
 
   <!-- LIST -->
-  <div class="bg-slate-800 p-6 rounded-xl">
+  <div class="bg-slate-800 p-6 rounded-2xl shadow-lg">
 
-    <h2 class="text-xl mb-4 font-semibold">
+    <h2 class="text-2xl mb-5 font-semibold">
       🧾 Daftar Belanja
     </h2>
 
@@ -103,28 +109,31 @@
 
     <div class="mt-6">
 
-      <h2 class="text-2xl">
+      <h2 class="text-2xl md:text-3xl">
         Total:
         <span class="text-green-400 font-bold">
           Rp <span id="total">0</span>
         </span>
       </h2>
 
+      <!-- INPUT BAYAR -->
       <input
         id="bayar"
         type="number"
         placeholder="Uang Bayar"
-        class="w-full p-3 rounded text-black mt-4">
+        class="w-full p-4 rounded-lg text-black text-lg mt-4">
 
+      <!-- BUTTON BAYAR -->
       <button
         onclick="bayarTransaksi()"
-        class="bg-green-500 hover:bg-green-600 p-3 rounded w-full mt-3">
+        class="bg-green-500 hover:bg-green-600 p-4 rounded-lg w-full mt-3 text-lg font-bold">
 
         💰 Bayar
 
       </button>
 
-      <h3 class="mt-4 text-lg">
+      <!-- KEMBALIAN -->
+      <h3 class="mt-5 text-xl">
         Kembalian:
         <span class="text-yellow-400 font-bold">
           Rp <span id="kembalian">0</span>
@@ -140,9 +149,9 @@
 
 <!-- STRUK -->
 <div id="struk"
-  class="hidden bg-white text-black p-4 mt-6 rounded w-80 mx-auto">
+  class="hidden bg-white text-black p-4 mt-6 rounded w-full max-w-sm mx-auto shadow-lg">
 
-  <h2 class="text-center font-bold text-xl">
+  <h2 class="text-center font-bold text-2xl">
     TOKO KASIR
   </h2>
 
@@ -156,9 +165,17 @@
 
   <hr class="my-2">
 
-  <p>Total: Rp <span id="struk-total"></span></p>
-  <p>Bayar: Rp <span id="struk-bayar"></span></p>
-  <p>Kembalian: Rp <span id="struk-kembalian"></span></p>
+  <p class="text-lg">
+    Total: Rp <span id="struk-total"></span>
+  </p>
+
+  <p class="text-lg">
+    Bayar: Rp <span id="struk-bayar"></span>
+  </p>
+
+  <p class="text-lg">
+    Kembalian: Rp <span id="struk-kembalian"></span>
+  </p>
 
   <p class="text-center mt-4 text-sm">
     Terima kasih 🙏
@@ -166,7 +183,7 @@
 
   <button
     onclick="window.print()"
-    class="bg-green-500 text-white px-4 py-2 rounded w-full mt-4">
+    class="bg-green-500 text-white px-4 py-3 rounded-lg w-full mt-4 text-lg font-bold">
 
     🖨️ Cetak Struk
 
@@ -174,6 +191,7 @@
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 <script src="script.js"></script>
 
 </body>
