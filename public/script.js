@@ -274,7 +274,7 @@ async function bayarTransaksi() {
       document.getElementById("struk")
         .classList.add("hidden");
 
-    }, 5000);
+    }, 15000);
 
     // RESET
     data = [];
@@ -285,6 +285,8 @@ async function bayarTransaksi() {
 
     alert("Transaksi berhasil!");
 
+    loadRiwayat();
+
   } catch (err) {
 
     console.log(err);
@@ -293,4 +295,65 @@ async function bayarTransaksi() {
 
   }
 
+  // =======================
+// AMBIL RIWAYAT
+// =======================
+
+async function loadRiwayat() {
+
+  const { data, error } =
+    await supabaseClient
+      .from("transaksi")
+      .select("*")
+      .order("id", { ascending: false });
+
+  if (error) {
+
+    console.log(error);
+
+    return;
+
+  }
+
+  let riwayat =
+    document.getElementById("riwayat");
+
+  riwayat.innerHTML = "";
+
+  data.forEach(item => {
+
+    riwayat.innerHTML += `
+
+      <tr class="border-b border-slate-700">
+
+        <td class="p-2">
+          ${item.nama_barang}
+        </td>
+
+        <td class="p-2">
+          Rp ${item.harga}
+        </td>
+
+        <td class="p-2">
+          ${item.jumlah}
+        </td>
+
+        <td class="p-2 text-green-400 font-bold">
+          Rp ${item.total}
+        </td>
+
+      </tr>
+
+    `;
+
+  });
+
+}
+
+
+// =======================
+// LOAD AWAL
+// =======================
+
+loadRiwayat();
 }
