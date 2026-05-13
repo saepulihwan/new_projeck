@@ -2,7 +2,7 @@ const supabaseUrl =
   "https://ijjdzlynmxzikwbiiqxx.supabase.co";
 
 const supabaseKey =
-  "sb_publishable_PKfhsyCFWeSXLe4RL0wUvA_aRTS0WDg";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlqamR6bHlubXh6aWt3YmlpcXh4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg0MjQyMzEsImV4cCI6MjA5NDAwMDIzMX0.EmUAwTYS1tBSdXD_EZd25Ly8zXT1WME6a51o3ce7FO0";
 
 const supabaseClient =
   supabase.createClient(
