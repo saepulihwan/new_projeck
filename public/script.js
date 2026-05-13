@@ -18,7 +18,24 @@ let data = [];
 
 let total = 0;
 
+// =======================
+// SESSION USER
+// =======================
 
+let sessionId =
+  localStorage.getItem("session_id");
+
+if (!sessionId) {
+
+  sessionId =
+    "user_" + Date.now();
+
+  localStorage.setItem(
+    "session_id",
+    sessionId
+  );
+
+}
 // =======================
 // TAMBAH BARANG
 // =======================
@@ -205,16 +222,17 @@ async function bayarTransaksi() {
     for (let item of data) {
 
       const { error } =
-        await supabaseClient
-          .from("transaksi")
-          .insert([
-            {
-              nama_barang: item.nama,
-              harga: item.harga,
-              jumlah: item.jumlah,
-              total: item.harga * item.jumlah
-            }
-          ]);
+       await supabaseClient
+  .from("transaksi")
+  .insert([
+    {
+      nama_barang: item.nama,
+      harga: item.harga,
+      jumlah: item.jumlah,
+      total: item.harga * item.jumlah,
+      session_id: sessionId
+    }
+  ]);
 
       if (error) {
 
@@ -302,10 +320,14 @@ async function bayarTransaksi() {
 async function loadRiwayat() {
 
   const { data, error } =
-    await supabaseClient
-      .from("transaksi")
-      .select("*")
-      .order("id", { ascending: false });
+  await supabaseClient
+    .from("transaksi")
+    .select("*")
+    .eq("session_id", sessionId)
+    .order("created_at", {
+      ascending: false
+    });
+      
 
   if (error) {
 
