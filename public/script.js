@@ -220,22 +220,22 @@ async function bayarTransaksi() {
 
   if (bayar < total) {
 
-    Swal.fire({
-  icon: "warning",
-  title: "Oops...",
-  html: `
-    <b>Uang pembayaran kurang!</b><br>
-    Silakan masukkan nominal yang cukup.
-  `,
-  confirmButtonText: "OK",
-  confirmButtonColor: "#f59e0b",
-  background: "#1e293b",
-  color: "#fff"
-});
+  Swal.fire({
+    icon: "warning",
+    title: "Oops...",
+    html: `
+      <b>Uang pembayaran kurang!</b><br>
+      Silakan masukkan nominal yang cukup.
+    `,
+    confirmButtonText: "OK",
+    confirmButtonColor: "#f59e0b",
+    background: "#1e293b",
+    color: "#fff"
+  });
 
-    return;
+  return;
 
-  }
+}
 
   // HITUNG KEMBALIAN
   let kembalian = bayar - total;
