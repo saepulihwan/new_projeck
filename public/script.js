@@ -220,7 +220,18 @@ async function bayarTransaksi() {
 
   if (bayar < total) {
 
-    alert("Uang kurang!");
+    Swal.fire({
+  icon: "warning",
+  title: "Oops...",
+  html: `
+    <b>Uang pembayaran kurang!</b><br>
+    Silakan masukkan nominal yang cukup.
+  `,
+  confirmButtonText: "OK",
+  confirmButtonColor: "#f59e0b",
+  background: "#1e293b",
+  color: "#fff"
+});
 
     return;
 
