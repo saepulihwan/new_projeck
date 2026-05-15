@@ -42,35 +42,43 @@ if (!sessionId) {
 function tambah() {
 
   let nama =
-    document.getElementById("nama").value;
+  document.getElementById("nama").value;
 
-  let hargaInput = document.getElementById("harga").value;
-  let jumlahInput = document.getElementById("jumlah").value;
+let hargaInput =
+  document.getElementById("harga").value;
 
-  let harga = Number(hargaInput);
-  let jumlah = Number(jumlahInput);
+let jumlahInput =
+  document.getElementById("jumlah").value;
+
+let harga = Number(hargaInput);
+
+let jumlah = Number(jumlahInput);
 
   // VALIDASI
   if (
-    nama.trim() === "" ||
-    isNaN(harga) ||
-    isNaN(jumlah) ||
-    harga <= 0 ||
-    jumlah <= 0
-  ) {
+  nama.trim() === "" ||
+  hargaInput === "" ||
+  jumlahInput === "" ||
+  isNaN(harga) ||
+  isNaN(jumlah) ||
+  harga <= 0 ||
+  jumlah <= 0
+) {
 
-    Swal.fire({
-  icon: "warning",
-  title: "Input Salah",
-  text: "Mohon isi data dengan benar"
-});
+  Swal.fire({
+    icon: "warning",
+    title: "Input Salah",
+    text: "Mohon isi data dengan benar"
+  });
+
+  return;
+
+}
 
     return;
 
   }
 
-  
-}
 
   // PUSH DATA
   data.push({
