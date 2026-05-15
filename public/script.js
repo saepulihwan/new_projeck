@@ -44,22 +44,33 @@ function tambah() {
   let nama =
     document.getElementById("nama").value;
 
-  let harga = parseInt(
-    document.getElementById("harga").value
-  );
+  let hargaInput = document.getElementById("harga").value;
+  let jumlahInput = document.getElementById("jumlah").value;
 
-  let jumlah = parseInt(
-    document.getElementById("jumlah").value
-  );
+  let harga = Number(hargaInput);
+  let jumlah = Number(jumlahInput);
 
   // VALIDASI
-  if (!nama || !harga || !jumlah) {
+  if (
+    nama.trim() === "" ||
+    isNaN(harga) ||
+    isNaN(jumlah) ||
+    harga <= 0 ||
+    jumlah <= 0
+  ) {
 
-    alert("Lengkapi data!");
+    Swal.fire({
+  icon: "warning",
+  title: "Input Salah",
+  text: "Mohon isi data dengan benar"
+});
 
     return;
 
   }
+
+  
+}
 
   // PUSH DATA
   data.push({
@@ -77,7 +88,7 @@ function tambah() {
 
   document.getElementById("jumlah").value = "";
 
-}
+
 
 
 // =======================
@@ -238,7 +249,11 @@ async function bayarTransaksi() {
 
         console.log(error);
 
-        alert("Gagal simpan ke database!");
+        Swal.fire({
+  icon: "error",
+  title: "Oops...",
+  text: "Gagal simpan ke database!"
+});
 
         return;
 
@@ -301,7 +316,13 @@ async function bayarTransaksi() {
 
     document.getElementById("bayar").value = "";
 
-    alert("Transaksi berhasil!");
+    Swal.fire({
+  icon: "success",
+  title: "Pembayaran Berhasil",
+  text: "Transaksi berhasil disimpan",
+  showConfirmButton: false,
+  timer: 2000
+});
 
     loadRiwayat();
 
